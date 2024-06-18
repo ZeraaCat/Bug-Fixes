@@ -1,0 +1,29 @@
+# image credits_v3 = Movie(play="movies/credits_v3.webm",channel='movie')
+screen video_credits():
+    modal True
+    style_prefix "confirm"
+    add "transparent2.png" xpos -0.1 ypos -0.8
+    frame:
+
+        vbox:
+            xalign .55
+            yalign .5
+            spacing 45
+
+            label _("Do you want to watch the video?"):
+                style "confirm_prompt_text"
+                xalign 0.5
+                yalign 0.5
+
+            hbox:
+                xalign 0.5
+                yalign 0.7
+                spacing 50
+
+                textbutton _("Yes") action ShowMenu("video_screen")   style "menuback_textbutton"
+                textbutton _("No") action Hide("video_credits")  style "menuback_textbutton" 
+
+screen video_screen():
+    modal True
+    python: 
+        renpy.movie_cutscene("movies/credits_v3.webm", stop_music=False) 
