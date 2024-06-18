@@ -1,0 +1,37 @@
+screen history():
+
+    tag menu
+
+    ## Avoid predicting this screen, as it can be very large.
+    predict False
+    
+    use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=0.0, spacing=gui.history_spacing):
+
+        style_prefix "history"
+        
+        # Limit the number of history entries displayed
+        $ displayed_history = _history_list[-5:]  # Limiting to the last 50 entries
+
+        for h in displayed_history:
+            window:
+                xsize 1500
+                has fixed:
+                    yfit True
+
+                if h.who:
+                    label h.who:
+                        style "history_label_text"
+                        xalign 0.5
+                        if "color" in h.who_args:
+                            text_color h.who_args["color"]
+
+                text h.what:
+                    style "slime_textbutton_text"
+                    xpos 800
+                    xsize 1200
+                    textalign 0.0
+        # Add your empty history message as before
+        if not displayed_history:
+            label _("The dialogue history is empty.") style "history_label_text"
+
+                
