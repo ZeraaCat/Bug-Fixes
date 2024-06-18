@@ -1,0 +1,18 @@
+## Main and Game Menu Screens
+#############################################
+
+vbox:
+        style_prefix "navigation"
+        xpos 0.8
+        yalign 0.33
+        spacing 15
+        
+
+        ## Define the style for the textbuttons
+        
+        if main_menu:
+            if persistent.new_game_clicked:
+                textbutton _("New Game") action ShowMenu("confirm_start") style "navigation_textbutton"
+            else:
+                textbutton _("New Game") action Start() style "navigation_textbutton"
+            textbutton _("Continue") action Continue() style "navigation_textbutton"
