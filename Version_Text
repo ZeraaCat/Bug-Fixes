@@ -1,0 +1,15 @@
+screen main_menu():
+    ## This ensures that any other menu screen is replaced.
+    tag menu
+
+    add gui.main_menu_background
+    
+    ## This empty frame darkens the main menu.
+    frame:
+        style "main_menu_frame"
+        text "Beta 0.5": 
+            xysize(300,300)
+            color "#8D86C9"
+            xpos 0.9
+            size 50
+        
