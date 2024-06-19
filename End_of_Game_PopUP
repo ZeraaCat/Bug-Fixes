@@ -1,0 +1,77 @@
+In Script: 
+# ユーザーがクリックするまで待つ
+    # pause 1.0
+    # show white with dissolve 
+    pause 3.0
+     
+    show screen unclickable_screen
+    $ renpy.movie_cutscene("movies/spr_animation.webm", stop_music=False)
+    $ renpy.movie_cutscene("movies/credits_v3.webm", stop_music=False)
+    $ config.overlay_screens.remove("quick_menu")
+    hide screen unclickable_screen # Assuming this is done after the movie cutscenes
+
+    show screen main_menu
+
+    python:
+        active_set = "gallery"
+        active_tab = "tab4"
+
+        if _preferences.language == 'mandarin':
+            message = "恭喜！We ball！"
+        elif _preferences.language == 'japanese':
+            message = "We Ball! よく出来ましたね！"
+        else:
+            message = "Congratulations! We ball!"
+
+        renpy.call_screen("game_end_popup", message)
+
+In Screens:
+screen game_end_popup(msg):
+    style_prefix "chapterend_popup"
+
+    add "transparent2.png" xpos -0.1 ypos -0.8
+
+    frame:
+
+        vbox:
+            xalign .55
+            yalign .5
+            spacing 45
+
+            text _(msg):
+                if (_preferences.language == 'japanese') or (_preferences.language == 'mandarin'):
+                    style "chapterend_textbutton_text"
+                else:
+                    style "chapterend_title_popup_text"
+                xalign 0.5
+                yalign 0.5
+            text _("Visit the A.S.H. Archive to see your progress,\nincluding Collected Items, Secret Snaps of amazing\nmoments caught in 4K, and extra memories of Krisis\nand the Vezcrewneers in the Seasonal Album!"):
+                style "chapterend_textbutton_text"
+                xalign 0.5
+                yalign 0.5
+                text_align 0.5 
+
+            hbox:
+                xalign 0.5
+                yalign 0.7
+                spacing 50
+                textbutton _("Check Now!") action [ShowMenu("inventory"),Hide("game_end_popup"),Function(renpy.hide_screen, "quick_menu")] style "chapterend_textbutton":
+                    text_align 0.5
+
+    if (_preferences.language=='japanese'):
+        imagebutton idle "gui/archive/Seasonal Album/btn/btn_close_2.png" action Hide("game_end_popup"):
+            xpos 0.73  
+            ypos 0.31
+    elif (_preferences.language=='mandarin'):
+        imagebutton idle "gui/archive/Seasonal Album/btn/btn_close_2.png" action Hide("game_end_popup"):
+            xpos 0.65 
+            ypos 0.31
+    else:    
+        imagebutton idle "gui/archive/Seasonal Album/btn/btn_close_2.png" action Hide("game_end_popup"):
+            xpos 0.655
+            ypos 0.305
+
+
+style chapterend_popup_text is empty
+style chapterend_title_popup_text is empty
+style chapterend_popup_frame is gui_frame
